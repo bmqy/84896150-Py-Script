@@ -1,5 +1,8 @@
 # -*- coding: utf8 -*-
-import json
+"""
+cron: 25 20 * * *
+new Env('吾爱签到');
+"""
 import requests
 import re
 import os
@@ -39,7 +42,5 @@ def main(cookie):
 
 
 if __name__ == '__main__':
-    with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r', encoding='utf-8')as f:
-        Config = json.load(f)
-    Cookie = Config['52PoJie']
+    Cookie = os.environ.get()
     wxBot(f'===吾爱签到开始===\n{main(Cookie)}===吾爱签到结束===\n')
