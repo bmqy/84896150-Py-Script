@@ -13,9 +13,7 @@ http = requests
 wxBotKey = os.environ.get('QYWX_KEY')
 sendDingSecret = os.environ.get('DD_BOT_SECRET')
 sendDingAccess_token = os.environ.get('DD_BOT_TOKEN')
-sendWxCorpid = os.environ.get('QYWX_AM'.split(',')[0])
-sendWxCorpsecret = os.environ.get('QYWX_AM'.split(',')[1])
-sendWxAgentid = os.environ.get('QYWX_AM'.split(',')[2])
+Wx = os.environ.get('QYWX_AM')
 sendTgToken = os.environ.get('TG_BOT_TOKEN')
 sendTgChat_id = os.environ.get('TG_USER_ID')
 
@@ -79,6 +77,11 @@ def sendDing(content):
 
 
 def sendWx(content):
+    if Wx == '':
+        return
+    sendWxCorpid = Wx[0]
+    sendWxCorpsecret = Wx[1]
+    sendWxAgentid = Wx[2]
     """微信企业版消息推送，m为消息参数"""
     params = {
         'corpid': sendWxCorpid,
