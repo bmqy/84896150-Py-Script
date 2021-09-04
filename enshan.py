@@ -6,14 +6,9 @@ new Env('恩山论坛-签到');
 import requests
 import os
 from push import sendDing
-from lxml import etree
+import re
 
 h = requests.Session()
-
-
-def xpath(txt, expr):
-    s = etree.HTML(txt)
-    return s.xpath(expr)
 
 
 def run(cook):
