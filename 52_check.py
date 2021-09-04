@@ -46,5 +46,4 @@ def main(cookie):
 
 if __name__ == '__main__':
     Cookie = os.environ.get('WUAI_COOKIE')
-    print(main(Cookie))
-    # wxBot(f'===吾爱签到开始===\n{}===吾爱签到结束===\n')
+    wxBot(f'===吾爱签到开始===\n{main(Cookie)}===吾爱签到结束===\n')
