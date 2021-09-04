@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 """
 cron: 25 2 * * *
-new Env('吾爱签到');
+new Env('吾爱破解-签到');
 """
 import requests
 import re
