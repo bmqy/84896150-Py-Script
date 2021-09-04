@@ -6,7 +6,7 @@ new Env('吾爱签到');
 import requests
 import re
 import os
-from push import wxBot
+# from push import wxBot
 
 h = requests.Session()
 
@@ -42,5 +42,5 @@ def main(cookie):
 
 
 if __name__ == '__main__':
-    Cookie = os.environ.get()
-    wxBot(f'===吾爱签到开始===\n{main(Cookie)}===吾爱签到结束===\n')
+    Cookie = os.environ.get('52_CK')
+    print(main(Cookie))
