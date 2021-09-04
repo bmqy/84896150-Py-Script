@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 """
-cron: 25 20 * * *
+cron: 25 2 * * *
 new Env('吾爱签到');
 """
 import requests
