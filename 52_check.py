@@ -12,13 +12,12 @@ h = requests.Session()
 
 
 def main(cookie):
-    cookie_dict = {i.split("=")[0]: i.split("=")[1] for i in cookie.split("; ")}
-    h.cookies.update(cookie_dict)
     msg = ''
     url = 'https://www.52pojie.cn/home.php?mod=task&do=apply&id=2'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Linux; Android 10; PBEM00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.18 Mobile Safari/537.36',
-        'ContentType': 'text/html;charset=gbk'
+        'ContentType': 'text/html;charset=gbk',
+        'Cookie': cookie
     }
     check_url = 'https://www.52pojie.cn/home.php?mod=task&do=draw&id=2'
     h.get(url, headers=headers)
