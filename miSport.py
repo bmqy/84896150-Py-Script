@@ -10,7 +10,10 @@ import re
 import time
 import requests
 import os
-import push
+try:
+    import push
+except:
+    pass
 
 List = []
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

@@ -9,7 +9,10 @@ import requests
 import re
 import time
 import os
-import push
+try:
+    import push
+except:
+    pass
 
 h = requests.Session()
 

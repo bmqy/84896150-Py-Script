@@ -7,7 +7,10 @@ new Env('恩山论坛-签到');
 """
 import requests
 import os
-import push
+try:
+    import push
+except:
+    pass
 import re
 
 h = requests.Session()

@@ -8,7 +8,10 @@ new Env('科学刀-签到');
 import requests
 import re
 import os
-import push
+try:
+    import push
+except:
+    pass
 
 h = requests.Session()
 
