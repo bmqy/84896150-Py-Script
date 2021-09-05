@@ -5,7 +5,7 @@ new Env('恩山论坛-签到');
 """
 import requests
 import os
-from push import sendDing
+import push
 import re
 
 h = requests.Session()
@@ -34,7 +34,9 @@ def main():
     cook = os.environ.get('ENSHAN_COOKIE')
     m = f'===恩山论坛开始===\n{run(cook)}===恩山论坛结束===\n'
     print(m)
-    sendDing(m)
+    push.sendDing(m)
+    push.wxBot(m)
+    push.sendWx(m)
 
 
 if __name__ == '__main__':

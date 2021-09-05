@@ -8,7 +8,7 @@ import re
 import os
 
 try:
-    from push import sendDing
+    import push
 except:
     pass
 
@@ -48,4 +48,6 @@ if __name__ == '__main__':
     Cookie = os.environ.get('WUAI_COOKIE')
     msg = f'===吾爱签到开始===\n{main(Cookie)}===吾爱签到结束===\n'
     print(msg)
-    sendDing(msg)
+    push.sendDing(msg)
+    push.wxBot(msg)
+    push.sendWx(msg)
