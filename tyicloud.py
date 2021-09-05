@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
+说明: 环境变量名`TIANYI`，账号密码-分割
 cron: 25 7 * * *
 new Env('天翼云盘-签到');
 """
@@ -159,7 +160,7 @@ def login(username, password):
 if __name__ == "__main__":
     result = '🏆天翼云盘签到姬🏆\n'
     UserInfo = os.environ.get('TIANYI')
-    username, password = UserInfo.split('|')
+    username, password = UserInfo.split('-')
     msg = login(username, password)
     if msg != "error":
         checkin()

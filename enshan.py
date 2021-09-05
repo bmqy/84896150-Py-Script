@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
+说明: 环境变量名`KXDAO_COOKIE`
 cron: 25 7 * * *
 new Env('恩山论坛-签到');
 """

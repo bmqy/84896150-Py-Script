@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
+说明: 环境变量名`WUAI_COOKI`
 cron: 25 7 * * *
 new Env('吾爱破解-签到');
 """

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
+说明: 环境变量名`MT_INFO`，账号密码-分割
 cron: 25 7 * * *
 new Env('MT论坛-签到');
 """
@@ -126,7 +127,7 @@ def run(username, password):
 
 
 def main():
-    user = os.environ.get('MT_INFO').split('&')
+    user = os.environ.get('MT_INFO').split('-')
     username, password = user
     m = '===MT论坛签到开始===\n'
     m += run(username, password)
