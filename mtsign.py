@@ -135,6 +135,7 @@ def main():
     m = '===MT论坛签到开始===\n'
     m += run(username, password)
     m += '===MT论坛签到结束===\n'
+    print(m)
     push.sendDing(m)
     push.wxBot(m)
     push.sendWx(m)

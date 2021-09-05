@@ -169,6 +169,7 @@ if __name__ == "__main__":
         checkin()
         lottery(1)
         lottery(2)
+        print(result)
         push.sendDing(result)
         push.wxBot(result)
         push.sendWx(result)

@@ -77,6 +77,7 @@ if __name__ == '__main__':
     m = '---科学刀签到开始---\n'
     m += main(Cookie) + '\n'
     m += '---科学刀签到结束---\n'
+    print(m)
     push.sendDing(m)
     push.wxBot(m)
     push.sendWx(m)

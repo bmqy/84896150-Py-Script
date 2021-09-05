@@ -145,6 +145,7 @@ if __name__ == '__main__':
         msg = run(user, pwd)
         List.append(msg)
     m = '\n'.join(List)
+    print(m)
     push.sendDing(m)
     push.wxBot(m)
     push.sendWx(m)
