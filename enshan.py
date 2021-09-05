@@ -20,8 +20,10 @@ def run(cook):
     }
     resp = h.get(url, headers=headers)
     try:
-        msg += f"""{xpath(resp.text, '//li[@class="xi1 cl"]/em/text()')[0][1:]}{xpath(resp.text, '//li[@class="xi1 cl"]/text()')[0]}\n"""
-        msg += f"""{xpath(resp.text, '//li[@class="cl"]/em/text()')[0]}{xpath(resp.text, '//li[@class="cl"]/text()')[0]}\n"""
+
+        bi = re.findall('恩山币: </em>(.*?)nb &nbsp;', resp.text)
+        jf = re.findall('<em>积分: </em>(.*?)<span', resp.text)
+        msg += f'恩山币：{bi}\n积分：{jf}\n'
         return msg
     except Exception as e:
         msg += f'{str(e)}\n'
