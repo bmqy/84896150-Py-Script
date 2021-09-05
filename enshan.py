@@ -21,8 +21,8 @@ def run(cook):
     resp = h.get(url, headers=headers)
     try:
 
-        bi = re.findall('恩山币: </em>(.*?)nb &nbsp;', resp.text)
-        jf = re.findall('<em>积分: </em>(.*?)<span', resp.text)
+        bi = re.findall('恩山币: </em>(.*?)nb &nbsp;', resp.text)[0]
+        jf = re.findall('<em>积分: </em>(.*?)<span', resp.text)[0]
         msg += f'恩山币：{bi}\n积分：{jf}\n'
         return msg
     except Exception as e:
