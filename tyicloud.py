@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
-cron: 25 2 * * *
+cron: 25 7 * * *
 new Env('天翼云盘-签到');
 """
 import requests

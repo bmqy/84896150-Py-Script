@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 """
 说明: 多账号版本，可以添加多个环境变量，账号密码以-分割
-cron: 25 2 * * *
+cron: 25 7 * * *
 new Env('小米运动');
 """
 import random
