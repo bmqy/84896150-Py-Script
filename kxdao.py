@@ -65,7 +65,6 @@ def main(cookie):
         db = re.findall('class="xi1 cl"><em> DB: </em>(.*?)&nbsp', i_r)[0]
         jf = re.findall('<li class="cl"><em>积分: </em>(.*?)<span class="xg1">', i_r)[0]
         msg += f'用户DB：{db[:-2]}，积分{jf}\n'
-        print(msg)
         return msg
     except Exception as e:
         msg += f'{str(e)}'

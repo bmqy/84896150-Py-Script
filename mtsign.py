@@ -78,14 +78,12 @@ def run(username, password):
     else:
         msg += '登陆失败！\n'
     time.sleep(1)
-    print(formhash)
     s_headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
     s_r = h.get('https://bbs.binmt.cc', headers=s_headers).text
     try:
         s_formhash = re.findall('<input type="hidden" name="formhash" value="(.*?)" />', s_r)[0]
-        print(s_formhash)
     except Exception as e:
         msg += f'{str(e)}'
         return msg
@@ -103,7 +101,6 @@ def run(username, password):
         'Referer': 'https://bbs.binmt.cc/'
     }
     check_r = h.get(check_url, params=check_params, headers=check_headers).text
-    print(check_r)
     if '今日已签' in check_r:
         msg += '今天已经签到过了\n'
     elif '签到成功' in check_r:
