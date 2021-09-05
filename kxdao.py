@@ -12,16 +12,15 @@ h = requests.Session()
 
 
 def main(cookie):
-    cookie_dict = {i.split("=")[0]: i.split("=")[1] for i in cookie.split("; ")}
     h.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'})
-    h.cookies.update(cookie_dict)
     msg = ''
     hash_url = 'https://www.kxdao.net/space-uid-74943.html'
     hash_headers = {
         'Host': 'www.kxdao.net',
         'Referer': 'https://www.kxdao.net/plugin.php',
         'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9'
+        'Accept-Language': 'zh-CN,zh;q=0.9',
+        'Cookie': cookie
     }
     hash_r = h.get(url=hash_url, headers=hash_headers)
     try:
@@ -39,7 +38,8 @@ def main(cookie):
     check_headers = {
         'referer': 'https://www.kxdao.net/',
         'accept-encoding': 'gzip, deflate, br',
-        'accept-language': 'zh-CN,zh;q=0.9'
+        'accept-language': 'zh-CN,zh;q=0.9',
+        'Cookie': cookie
     }
     check_r = h.get(url=check_url, headers=check_headers, params=check_params).text
     try:
@@ -51,7 +51,8 @@ def main(cookie):
     i_url = 'https://www.kxdao.net/home.php?mod=spacecp&ac=credit&showcredit=1'
     i_headers = {
         'Host': 'www.kxdao.net',
-        'referer': 'https://www.kxdao.net/'
+        'referer': 'https://www.kxdao.net/',
+        'Cookie': cookie
     }
     i_r = h.get(url=i_url, headers=i_headers).text
 
