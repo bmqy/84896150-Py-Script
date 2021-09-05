@@ -1,4 +1,8 @@
 # -*- coding: utf8 -*-
+"""
+cron: 25 2 * * *
+new Env('科学刀-签到');
+"""
 import requests
 import re
 import os
