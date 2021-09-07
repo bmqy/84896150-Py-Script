@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 """
 cron: */15 * * * *
-new Env('天翼云盘-签到');
+new Env('域名解析-签到');
 """
 import requests
 import time
