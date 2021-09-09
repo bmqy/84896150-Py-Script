@@ -1,3 +1,5 @@
+`docker exec -it ql cp Mr-Liu1996_ql_script_push.py push.py`
+
 | 变量名 | 示列值 | 文件名 | 说明 |
 |:----:|:----:|:----:|------|
 |`WUAI_COOKIE`|`htVD_2132_saltkey=xxx; htVD_2132_auth=xxx;`|52_check.py|吾爱破解签到|
