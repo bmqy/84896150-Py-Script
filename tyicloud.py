@@ -167,4 +167,4 @@ if __name__ == "__main__":
         lottery(1)
         lottery(2)
         print(result)
-        send(result)
+        send('天翼云盘', result)

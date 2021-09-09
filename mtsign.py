@@ -130,7 +130,7 @@ def main():
     m += run(username, password)
     m += '===MT论坛签到结束===\n'
     print(m)
-    send(m)
+    send('MT论坛', m)
 
 
 if __name__ == '__main__':

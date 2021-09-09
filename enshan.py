@@ -36,7 +36,7 @@ def main():
     cook = os.environ.get('ENSHAN_COOKIE')
     m = f'===恩山论坛开始===\n{run(cook)}===恩山论坛结束===\n'
     print(m)
-    send(m)
+    send('恩山论坛', m)
 
 
 if __name__ == '__main__':

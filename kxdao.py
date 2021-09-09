@@ -74,4 +74,4 @@ if __name__ == '__main__':
     m += main(Cookie) + '\n'
     m += '---科学刀签到结束---\n'
     print(m)
-    send(m)
+    send('科学刀', m)

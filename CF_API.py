@@ -10,7 +10,6 @@ import json
 import os
 from push import send
 
-
 http = requests.Session()
 
 
@@ -76,4 +75,4 @@ if __name__ == '__main__':
         'proxied': False  # 是否开启Cloudflare
     }
     M = askApi(accountInfo, dnsInfo=dnsInfo)
-    send(m)
+    send('域名解析', M)

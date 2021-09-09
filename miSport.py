@@ -135,4 +135,4 @@ if __name__ == '__main__':
         List.append(msg)
     m = '\n'.join(List)
     print(m)
-    send(m)
+    send('小米运动', m)

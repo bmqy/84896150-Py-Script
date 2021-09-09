@@ -60,4 +60,4 @@ if __name__ == '__main__':
     name, pwd = users.split('-')
     m = login(name, pwd)
     print(m)
-    send(m)
+    send('科技玩家', m)

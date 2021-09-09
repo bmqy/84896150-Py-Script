@@ -17,46 +17,30 @@ from urllib3.util import Retry
 cur_path = os.path.abspath(os.path.dirname(__file__))
 root_path = os.path.split(cur_path)[0]
 sys.path.append(root_path)
-# 通知服务
-BARK = ''  # bark服务,自行搜索;,此参数如果以http或者https开头则判定为自建bark服务;secrets可填;
-SCKEY = ''  # Server酱的SCKEY; secrets可填
+
 TG_BOT_TOKEN = ''  # tg机器人的TG_BOT_TOKEN; secrets可填1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
 TG_USER_ID = ''  # tg机器人的TG_USER_ID; secrets可填 1434078534
 TG_API_HOST = ''  # tg 代理api
 TG_PROXY_IP = ''  # tg机器人的TG_PROXY_IP; secrets可填
 TG_PROXY_PORT = ''  # tg机器人的TG_PROXY_PORT; secrets可填
-DD_BOT_ACCESS_TOKEN = ''  # 钉钉机器人的DD_BOT_ACCESS_TOKEN; secrets可填
+DD_BOT_TOKEN = ''  # 钉钉机器人的DD_BOT_ACCESS_TOKEN; secrets可填
 DD_BOT_SECRET = ''  # 钉钉机器人的DD_BOT_SECRET; secrets可填
-QQ_SKEY = ''  # qq机器人的QQ_SKEY; secrets可填
-QQ_MODE = ''  # qq机器人的QQ_MODE; secrets可填
+QYWX_KEY = ''  # 企业机器人
 QYWX_AM = ''  # 企业微信
 PUSH_PLUS_TOKEN = ''  # 微信推送Plus+
-GOBOT_URL = ""  # go-cqhttp 例如:推送到个人QQ: http://127.0.0.1/send_private_msg  群：http://127.0.0.1/send_group_msg
-GOBOT_TOKEN = ""  # go-cqhttp的access_token 可不填
-GOBOT_QQ = ""  # go-cqhttp的推送群或者用户 GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群
+message_info = ''''''
 notify_mode = []
 
-message_info = ''''''
-
-# GitHub action运行需要填写对应的secrets
-if "BARK" in os.environ and os.environ["BARK"]:
-    BARK = os.environ["BARK"]
-if "SCKEY" in os.environ and os.environ["SCKEY"]:
-    SCKEY = os.environ["SCKEY"]
 if "TG_BOT_TOKEN" in os.environ and os.environ["TG_BOT_TOKEN"] and "TG_USER_ID" in os.environ and os.environ[
     "TG_USER_ID"]:
     TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
     TG_USER_ID = os.environ["TG_USER_ID"]
 if "TG_API_HOST" in os.environ and os.environ["TG_API_HOST"]:
     TG_API_HOST = os.environ["TG_API_HOST"]
-if "DD_BOT_ACCESS_TOKEN" in os.environ and os.environ["DD_BOT_ACCESS_TOKEN"] and "DD_BOT_SECRET" in os.environ and \
+if "DD_BOT_TOKEN" in os.environ and os.environ["DD_BOT_TOKEN"] and "DD_BOT_SECRET" in os.environ and \
         os.environ["DD_BOT_SECRET"]:
-    DD_BOT_ACCESS_TOKEN = os.environ["DD_BOT_ACCESS_TOKEN"]
+    DD_BOT_TOKEN = os.environ["DD_BOT_TOKEN"]
     DD_BOT_SECRET = os.environ["DD_BOT_SECRET"]
-if "QQ_SKEY" in os.environ and os.environ["QQ_SKEY"] and "QQ_MODE" in os.environ and os.environ["QQ_MODE"]:
-    QQ_SKEY = os.environ["QQ_SKEY"]
-    QQ_MODE = os.environ["QQ_MODE"]
-# 获取pushplus+ PUSH_PLUS_TOKEN
 if "PUSH_PLUS_TOKEN" in os.environ:
     if len(os.environ["PUSH_PLUS_TOKEN"]) > 1:
         PUSH_PLUS_TOKEN = os.environ["PUSH_PLUS_TOKEN"]
@@ -66,36 +50,19 @@ if "QYWX_AM" in os.environ:
     if len(os.environ["QYWX_AM"]) > 1:
         QYWX_AM = os.environ["QYWX_AM"]
         # print("已获取并使用Env环境 QYWX_AM")
-# 获取go-cqhttp
-if "GOBOT_URL" in os.environ and os.environ["GOBOT_URL"]:
-    GOBOT_URL = os.environ["GOBOT_URL"]
-    GOBOT_TOKEN = os.environ["GOBOT_TOKEN"]
-    GOBOT_QQ = os.environ["GOBOT_QQ"]
+if 'QYWX_KEY' in os.environ["QYWX_KEY"]:
+    QYWX_KEY = os.environ["QYWX_KEY"]
 
-if BARK:
-    notify_mode.append('bark')
-    # print("BARK 推送打开")
-if SCKEY:
-    notify_mode.append('sc_key')
-    # print("Server酱 推送打开")
 if TG_BOT_TOKEN and TG_USER_ID:
     notify_mode.append('telegram_bot')
-    # print("Telegram 推送打开")
-if DD_BOT_ACCESS_TOKEN and DD_BOT_SECRET:
+if DD_BOT_TOKEN and DD_BOT_SECRET:
     notify_mode.append('dingding_bot')
-    # print("钉钉机器人 推送打开")
-if QQ_SKEY and QQ_MODE:
-    notify_mode.append('coolpush_bot')
-    # print("QQ机器人 推送打开")
-if GOBOT_URL and GOBOT_QQ:
-    notify_mode.append('go_cqhttp')
-    # print("go-cqhttp机器人 推送打开")
 if PUSH_PLUS_TOKEN:
     notify_mode.append('pushplus_bot')
-    # print("微信推送Plus机器人 推送打开")
 if QYWX_AM:
     notify_mode.append('wecom_app')
-    # print("企业微信机器人 推送打开")
+if QYWX_KEY:
+    notify_mode.append('qywx_bot')
 
 
 def message(str_msg):
@@ -105,57 +72,6 @@ def message(str_msg):
     sys.stdout.flush()
 
 
-def bark(title, content):
-    print("\n")
-    if not BARK:
-        print("bark服务的bark_token未设置!!\n取消推送")
-        return
-    print("bark服务启动")
-    url = None
-    if BARK.startswith('http'):
-        url = f"""{BARK}/{title}/{content}"""
-    else:
-        url = f"""https://api.day.app/{BARK}/{title}/{content}"""
-    response = requests.get(url).json()
-    if response['code'] == 200:
-        print('推送成功！')
-    else:
-        print('推送失败！')
-
-
-# go-cqhttp
-def go_cqhttp(title, content):
-    print("\n")
-    if not GOBOT_URL or not GOBOT_QQ:
-        print("go-cqhttp服务的GOBOT_URL或GOBOT_QQ未设置!!\n取消推送")
-        return
-    print("go-cqhttp服务启动")
-    url = f"""{GOBOT_URL}?access_token={GOBOT_TOKEN}&{GOBOT_QQ}&message=标题:{title}\n内容:{content}"""
-    response = requests.get(url).json()
-    if response['status'] == 'ok':
-        print('推送成功！')
-    else:
-        print('推送失败！')
-
-
-def serverJ(title, content):
-    print("\n")
-    if not SCKEY:
-        print("server酱服务的SCKEY未设置!!\n取消推送")
-        return
-    print("serverJ服务启动")
-    data = {
-        "text": title,
-        "desp": content.replace("\n", "\n\n")
-    }
-    response = requests.post(f"https://sc.ftqq.com/{SCKEY}.send", data=data).json()
-    if response['errno'] == 0:
-        print('推送成功！')
-    else:
-        print('推送失败！')
-
-
-# tg通知
 def telegram_bot(title, content):
     try:
         print("\n")
@@ -188,6 +104,31 @@ def telegram_bot(title, content):
         print(e)
 
 
+def wxBot(title, content):
+    """
+    企业微信机器人消息推送
+    """
+    if len(content.encode("unicode_escape")) >= 4096:
+        msgtype = 'text'
+    else:
+        msgtype = 'markdown'
+    url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send'
+    params = {
+        'key': QYWX_KEY,
+        'debug': '1'
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    data = {
+        "msgtype": msgtype,
+        msgtype: {
+            "content": f'{title}\n\n{content}'
+        }
+    }
+    requests.post(url, headers=headers, params=params, json=data)
+
+
 def dingding_bot(title, content):
     timestamp = str(round(time.time() * 1000))  # 时间戳
     secret_enc = DD_BOT_SECRET.encode('utf-8')
@@ -196,7 +137,7 @@ def dingding_bot(title, content):
     hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
     sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))  # 签名
     print('开始使用 钉钉机器人 推送消息...', end='')
-    url = f'https://oapi.dingtalk.com/robot/send?access_token={DD_BOT_ACCESS_TOKEN}&timestamp={timestamp}&sign={sign}'
+    url = f'https://oapi.dingtalk.com/robot/send?access_token={DD_BOT_TOKEN}&timestamp={timestamp}&sign={sign}'
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     data = {
         'msgtype': 'text',
@@ -209,47 +150,6 @@ def dingding_bot(title, content):
         print('推送失败！')
 
 
-def coolpush_bot(title, content):
-    print("\n")
-    if not QQ_SKEY or not QQ_MODE:
-        print("qq服务的QQ_SKEY或者QQ_MODE未设置!!\n取消推送")
-        return
-    print("qq服务启动")
-    url = f"https://qmsg.zendee.cn/{QQ_MODE}/{QQ_SKEY}"
-    payload = {'msg': f"{title}\n\n{content}".encode('utf-8')}
-    response = requests.post(url=url, params=payload).json()
-    if response['code'] == 0:
-        print('推送成功！')
-    else:
-        print('推送失败！')
-
-
-# push推送
-def pushplus_bot(title, content):
-    try:
-        print("\n")
-        if not PUSH_PLUS_TOKEN:
-            print("PUSHPLUS服务的token未设置!!\n取消推送")
-            return
-        print("PUSHPLUS服务启动")
-        url = 'http://www.pushplus.plus/send'
-        data = {
-            "token": PUSH_PLUS_TOKEN,
-            "title": title,
-            "content": content
-        }
-        body = json.dumps(data).encode(encoding='utf-8')
-        headers = {'Content-Type': 'application/json'}
-        response = requests.post(url=url, data=body, headers=headers).json()
-        if response['code'] == 200:
-            print('推送成功！')
-        else:
-            print('推送失败！')
-    except Exception as e:
-        print(e)
-
-
-# 企业微信 APP 推送
 def wecom_app(title, content):
     try:
         if not QYWX_AM:
@@ -338,47 +238,16 @@ class WeCom:
         return respone["errmsg"]
 
 
-def one():
-    url = 'https://v1.hitokoto.cn/'
-    res = requests.get(url).json()
-    # noinspection PyBroadException
-    try:
-        result = res['hitokoto'] + '  ---' + res['from']
-    except:
-        return '出错了请检查'
-    return result
-
-
-def send(content, title=''):
+def send(title, content):
     """
-    使用 bark, telegram bot, dingding bot, serverJ 发送手机推送
+    使用 telegram bot, dingding bot 发送手机推送
     :param title:
     :param content:
     :return:
     """
-    text = one()
-    content += '\n\n\n' + text
     for i in notify_mode:
-        if i == 'bark':
-            if BARK:
-                bark(title=title, content=content)
-            else:
-                print('未启用 bark')
-            continue
-        if i == 'sc_key':
-            if SCKEY:
-                serverJ(title=title, content=content)
-            else:
-                print('未启用 Server酱')
-            continue
-        elif i == 'go_cqhttp':
-            if GOBOT_URL and GOBOT_QQ:
-                go_cqhttp(title=title, content=content)
-            else:
-                print('未启用 go-cqhttp')
-            continue
-        elif i == 'dingding_bot':
-            if DD_BOT_ACCESS_TOKEN and DD_BOT_SECRET:
+        if i == 'dingding_bot':
+            if DD_BOT_TOKEN and DD_BOT_SECRET:
                 dingding_bot(title=title, content=content)
             else:
                 print('未启用 钉钉机器人')
@@ -389,23 +258,17 @@ def send(content, title=''):
             else:
                 print('未启用 telegram机器人')
             continue
-        elif i == 'coolpush_bot':
-            if QQ_SKEY and QQ_MODE:
-                coolpush_bot(title=title, content=content)
-            else:
-                print('未启用 QQ机器人')
-            continue
-        elif i == 'pushplus_bot':
-            if PUSH_PLUS_TOKEN:
-                pushplus_bot(title=title, content=content)
-            else:
-                print('未启用 PUSHPLUS机器人')
-            continue
         elif i == 'wecom_app':
             if QYWX_AM:
                 wecom_app(title=title, content=content)
             else:
                 print('未启用企业微信应用消息推送')
+            continue
+        elif i == 'qywx_bot':
+            if QYWX_KEY:
+                wxBot(title=title, content=content)
+            else:
+                print('未启用企业机器人消息推送')
             continue
         else:
             print('此类推送方式不存在')
