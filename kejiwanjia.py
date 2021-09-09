@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
+说明: 环境变量`KJWJ_UP`账号密码`-`分割
 cron: 20 7 * * *
 new Env('科技玩家-签到');
 """
 import requests
+import os
 from push import send
 
 
@@ -54,7 +56,8 @@ def login(usr, pwd):
 
 
 if __name__ == '__main__':
-    m = login('1637494149@qq.com', 'Aa199612')
+    users = os.environ.get('KJWJ_UP')
+    name, pwd = users.split('-')
+    m = login(name, pwd)
     print(m)
     send(m)
-
