@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 """
-cron: */15 * * * *
+cron: 20 7 * * *
 new Env('科技玩家-签到');
 """
 import requests
