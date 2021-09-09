@@ -10,10 +10,7 @@ import re
 import time
 import requests
 import os
-try:
-    import push
-except:
-    pass
+from push import send
 
 List = []
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -138,6 +135,4 @@ if __name__ == '__main__':
         List.append(msg)
     m = '\n'.join(List)
     print(m)
-    push.sendDing(m)
-    push.wxBot(m)
-    push.sendWx(m)
+    send(m)

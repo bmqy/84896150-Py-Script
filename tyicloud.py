@@ -13,10 +13,7 @@ import base64
 import hashlib
 import os
 import sys
-try:
-    import push
-except:
-    pass
+from push import send
 
 sys.path.append('.')
 requests.packages.urllib3.disable_warnings()
@@ -170,6 +167,4 @@ if __name__ == "__main__":
         lottery(1)
         lottery(2)
         print(result)
-        push.sendDing(result)
-        push.wxBot(result)
-        push.sendWx(result)
+        send(result)

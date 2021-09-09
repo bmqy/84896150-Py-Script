@@ -8,10 +8,7 @@ import requests
 import time
 import json
 import os
-try:
-    import push
-except:
-    pass
+from push import send
 
 
 http = requests.Session()
@@ -79,6 +76,4 @@ if __name__ == '__main__':
         'proxied': False  # 是否开启Cloudflare
     }
     M = askApi(accountInfo, dnsInfo=dnsInfo)
-    push.sendWx(M)
-    push.wxBot(M)
-    push.sendDing(M)
+    send(m)

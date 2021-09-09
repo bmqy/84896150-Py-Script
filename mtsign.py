@@ -9,10 +9,7 @@ import requests
 import re
 import time
 import os
-try:
-    import push
-except:
-    pass
+from push import send
 
 h = requests.Session()
 
@@ -133,9 +130,7 @@ def main():
     m += run(username, password)
     m += '===MT论坛签到结束===\n'
     print(m)
-    push.sendDing(m)
-    push.wxBot(m)
-    push.sendWx(m)
+    send(m)
 
 
 if __name__ == '__main__':

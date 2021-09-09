@@ -2,11 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import sys
-import os, re
-
-cur_path = os.path.abspath(os.path.dirname(__file__))
-root_path = os.path.split(cur_path)[0]
-sys.path.append(root_path)
+import os
+import re
 import requests
 import json
 import time
@@ -17,6 +14,9 @@ import urllib.parse
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+cur_path = os.path.abspath(os.path.dirname(__file__))
+root_path = os.path.split(cur_path)[0]
+sys.path.append(root_path)
 # 通知服务
 BARK = ''  # bark服务,自行搜索;,此参数如果以http或者https开头则判定为自建bark服务;secrets可填;
 SCKEY = ''  # Server酱的SCKEY; secrets可填
@@ -348,7 +348,8 @@ def one():
         return '出错了请检查'
     return result
 
-def send(title, content):
+
+def send(content, title=''):
     """
     使用 bark, telegram bot, dingding bot, serverJ 发送手机推送
     :param title:
@@ -356,7 +357,7 @@ def send(title, content):
     :return:
     """
     text = one()
-    content += '\n\n\n'+text
+    content += '\n\n\n' + text
     for i in notify_mode:
         if i == 'bark':
             if BARK:

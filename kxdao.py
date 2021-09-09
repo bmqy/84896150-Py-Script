@@ -8,10 +8,7 @@ new Env('科学刀-签到');
 import requests
 import re
 import os
-try:
-    import push
-except:
-    pass
+from push import send
 
 h = requests.Session()
 
@@ -77,6 +74,4 @@ if __name__ == '__main__':
     m += main(Cookie) + '\n'
     m += '---科学刀签到结束---\n'
     print(m)
-    push.sendDing(m)
-    push.wxBot(m)
-    push.sendWx(m)
+    send(m)
