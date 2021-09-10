@@ -49,14 +49,14 @@ def login(usr, pwd):
         resp = session.post(check_url, headers=check_head)
         if resp.status_code == 200:
             info = resp.json()
-            if type(info) == dict:
-                msg += f"签到成功：{info.get('credit')}金币\n"
-            else:
+            if type(info) == str:
                 msg += f"已经签到：{info}金币\n"
+            else:
+                msg += f"签到成功：{info.get('credit')}金币\n"
         return msg
     else:
         msg += '账号登陆失败\n账号或密码错误\n'
-        return
+        return msg
 
 
 if __name__ == '__main__':
