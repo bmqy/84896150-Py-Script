@@ -61,10 +61,10 @@ if __name__ == '__main__':
         'CF_DOMAIN'] \
             and 'CF_DNS' in os.environ and os.environ['CF_DNS']:
         email = os.environ['CF_EMAIL']
-        api = os.environ.get('CF_KEY')
-        zones = os.environ.get('CF_ZONES')
-        name = os.environ.get('CF_DOMAIN')
-        dns_records = os.environ.get('CF_DNS')
+        api = os.environ['CF_KEY']
+        zones = os.environ['CF_ZONES']
+        name = os.environ['CF_DOMAIN']
+        dns_records = os.environ['CF_DNS']
         accountInfo = {
             'email': email,
             'zones': zones,
