@@ -56,23 +56,29 @@ def askApi(accountInfo, dnsInfo):
 if __name__ == '__main__':
     ipv4 = requests.get("http://ip.3322.net/").text
     ipv4 = ipv4[:-1]
-    email = os.environ.get('CF_EMAIL')
-    api = os.environ.get('CF_KEY')
-    zones = os.environ.get('CF_ZONES')
-    name = os.environ.get('CF_DOMAIN')
-    dns_records = os.environ.get('CF_DNS')
-    accountInfo = {
-        'email': email,
-        'zones': zones,
-        'api': api
-    }
-    dnsInfo = {
-        'dns_records': dns_records,  # DNS解析ID
-        'type': 'A',  # A 记录
-        'name': name,  # 解析的域名
-        'content': ipv4,  # ipv4地址
-        'ttl': 1,  # TTL
-        'proxied': False  # 是否开启Cloudflare
-    }
-    M = askApi(accountInfo, dnsInfo=dnsInfo)
-    send('域名解析', M)
+    if 'CF_EMAIL' in os.environ and os.environ['CF_EMAIL'] and 'CF_KEY' in os.environ and os.environ['CF_KEY'] and \
+            'CF_ZONES' in os.environ and os.environ['CF_ZONES'] and 'CF_DOMAIN' in os.environ and os.environ[
+        'CF_DOMAIN'] \
+            and 'CF_DNS' in os.environ and os.environ['CF_DNS']:
+        email = os.environ['CF_EMAIL']
+        api = os.environ.get('CF_KEY')
+        zones = os.environ.get('CF_ZONES')
+        name = os.environ.get('CF_DOMAIN')
+        dns_records = os.environ.get('CF_DNS')
+        accountInfo = {
+            'email': email,
+            'zones': zones,
+            'api': api
+        }
+        dnsInfo = {
+            'dns_records': dns_records,  # DNS解析ID
+            'type': 'A',  # A 记录
+            'name': name,  # 解析的域名
+            'content': ipv4,  # ipv4地址
+            'ttl': 1,  # TTL
+            'proxied': False  # 是否开启Cloudflare
+        }
+        M = askApi(accountInfo, dnsInfo=dnsInfo)
+        send('域名解析', M)
+    else:
+        send('域名解析', '未正确配置环境变量')
