@@ -54,7 +54,7 @@ def askApi(accountInfo, dnsInfo):
 
 
 if __name__ == '__main__':
-    ipv4 = requests.get("https://ipv4.icanhazip.com").text
+    ipv4 = requests.get("http://ip.3322.net/").text
     ipv4 = ipv4[:-1]
     email = os.environ.get('CF_EMAIL')
     api = os.environ.get('CF_KEY')
