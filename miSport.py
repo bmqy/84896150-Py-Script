@@ -127,12 +127,18 @@ def get_app_token(login_token):
 
 
 if __name__ == '__main__':
-    users = os.environ.get('XIAOMI')
-    u = users.split('&')
-    for x in u:
-        user, pwd = x.split('-')
-        msg = run(user, pwd)
-        List.append(msg)
-    m = '\n'.join(List)
-    print(m)
-    send('小米运动', m)
+    i = 1
+    if 'XIAOMI' in os.environ:
+        users = os.environ['TIANYI'].split('&')
+        for x in users:
+            i += 1
+            user, pwd = x.split('-')
+            List.append(f'===账号{str(i)}开始===\n\n')
+            msg = run(user, pwd)
+            List.append(msg)
+        m = '\n'.join(List)
+        print(m)
+        send('小米运动', m)
+    else:
+        print('未配置环境变量')
+        send('小米运动', '未配置环境变量')

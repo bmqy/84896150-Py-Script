@@ -12,10 +12,10 @@ import os
 from push import send
 
 h = requests.Session()
+List = []
 
 
 def run(username, password):
-    msg = ''
     get_url = 'https://bbs.binmt.cc/k_misign-sign.html'
     get_headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
@@ -24,8 +24,8 @@ def run(username, password):
     try:
         formhash = re.findall('<input type="hidden" name="formhash" value="(.*?)" />', r.text)[0]
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
+        return
     time.sleep(1)
     hash_url = 'https://bbs.binmt.cc/member.php'
     hash_params = dict(
@@ -45,8 +45,8 @@ def run(username, password):
     try:
         loginhash = re.findall('amp;loginhash=(.*?)"', hash_r.text)[0]
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
+        return
     time.sleep(1)
     login_url = 'https://bbs.binmt.cc/member.php'
     login_params = dict(
@@ -71,9 +71,9 @@ def run(username, password):
     }
     login_r = h.post(login_url, headers=login_headers, params=login_params, data=login_data)
     if '欢迎您回来' in login_r.text:
-        msg += '登陆成功！\n'
+        List.append('登陆成功！')
     else:
-        msg += '登陆失败！\n'
+        List.append('登陆失败！')
     time.sleep(1)
     s_headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
@@ -82,8 +82,8 @@ def run(username, password):
     try:
         s_formhash = re.findall('<input type="hidden" name="formhash" value="(.*?)" />', s_r)[0]
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
+        return
     check_url = 'https://bbs.binmt.cc/plugin.php'
     check_params = dict(
         id='k_misign:sign',
@@ -99,14 +99,13 @@ def run(username, password):
     }
     check_r = h.get(check_url, params=check_params, headers=check_headers).text
     if '今日已签' in check_r:
-        msg += '今天已经签到过了\n'
+        List.append('今天已经签到过了')
     elif '签到成功' in check_r:
         msg1 = re.findall('获得随机奖励(.*?)金币', check_r)[0]
         msg2 = re.findall('已累计签到\d+ 天')
-        msg += f'签到成功，{msg1}，{msg2}\n'
+        List.append(f'签到成功，{msg1}，{msg2}')
     else:
-        msg += '签到失败，未知错误\n'
-        return msg
+        List.append('签到失败，未知错误')
     i_url = 'https://bbs.binmt.cc/home.php?mod=spacecp&ac=credit&showcredit=1'
     i_headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
@@ -116,21 +115,26 @@ def run(username, password):
     try:
         db = re.findall('金币: </em>(.*?)&nbsp', i_r)[0]
         jf = re.findall('积分: </em>(.*?)<span', i_r)[0]
-        msg += f'用户金币：{db}，积分{jf}\n'
-        return msg
+        List.append(f'用户金币：{db}，积分{jf}')
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
 
 
 def main():
-    user = os.environ.get('MT_INFO').split('-')
-    username, password = user
-    m = '===MT论坛签到开始===\n'
-    m += run(username, password)
-    m += '===MT论坛签到结束===\n'
-    print(m)
-    send('MT论坛', m)
+    i = 1
+    if 'MT_INFO' in os.environ:
+        users = os.environ['MT_INFO'].split('&')
+        for x in users:
+            i += 1
+            name, pwd = x.split('-')
+            List.append(f'===账号{str(i)}开始===\n')
+            run(name, pwd)
+        tt = '\n'.join(List)
+        print(tt)
+        send('MT论坛', tt)
+    else:
+        print('未配置环境变量')
+        send('MT论坛', '未配置环境变量')
 
 
 if __name__ == '__main__':

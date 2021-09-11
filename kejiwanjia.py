@@ -9,10 +9,11 @@ import requests
 import os
 from push import send
 
+List = []
+
 
 def login(usr, pwd):
     session = requests.Session()
-    msg = ''
     login_url = 'https://www.kejiwanjia.com/wp-json/jwt-auth/v1/token'
     headers = {
         'user-agent': 'Mozilla/5.0 (Linux; Android 10; PBEM00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.52 Mobile Safari/537.36'
@@ -33,10 +34,10 @@ def login(usr, pwd):
     res = session.post(login_url, headers=headers, data=data)
     if res.status_code == 200:
         status = res.json()
-        msg += f"账号`{status.get('name')}`登陆成功\n"
-        msg += f"ID：{status.get('id')}\n"
-        msg += f"金币：{status.get('credit')}\n"
-        msg += f"等级：{status.get('lv').get('lv').get('name')}\n"
+        List.append(f"账号`{status.get('name')}`登陆成功")
+        List.append(f"ID：{status.get('id')}")
+        List.append(f"金币：{status.get('credit')}")
+        List.append(f"等级：{status.get('lv').get('lv').get('name')}")
         token = status.get('token')
         check_url = 'https://www.kejiwanjia.com/wp-json/b2/v1/userMission'
         check_head = {
@@ -50,18 +51,25 @@ def login(usr, pwd):
         if resp.status_code == 200:
             info = resp.json()
             if type(info) == str:
-                msg += f"已经签到：{info}金币\n"
+                List.append(f"已经签到：{info}金币")
             else:
-                msg += f"签到成功：{info.get('credit')}金币\n"
-        return msg
+                List.append(f"签到成功：{info.get('credit')}金币")
     else:
-        msg += '账号登陆失败\n账号或密码错误\n'
-        return msg
+        List.append('账号登陆失败: 账号或密码错误')
 
 
 if __name__ == '__main__':
-    users = os.environ.get('KJWJ_UP')
-    name, pwd = users.split('-')
-    m = login(name, pwd)
-    print(m)
-    send('科技玩家', m)
+    i = 1
+    if 'KJWJ_UP' in os.environ:
+        users = os.environ['KJWJ_UP'].split('&')
+        for x in users:
+            i += 1
+            name, pwd = x.split('-')
+            List.append(f'===账号{str(i)}开始===\n')
+            login(name, pwd)
+        tt = '\n'.join(List)
+        print(tt)
+        send('科技玩家', tt)
+    else:
+        print('未配置环境变量')
+        send('科技玩家', '未配置环境变量')

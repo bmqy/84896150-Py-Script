@@ -11,11 +11,12 @@ import os
 from push import send
 
 h = requests.Session()
+List = []
 
 
 def main(cookie):
-    h.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'})
-    msg = ''
+    h.headers.update({
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'})
     hash_url = 'https://www.kxdao.net/space-uid-74943.html'
     hash_headers = {
         'Host': 'www.kxdao.net',
@@ -28,8 +29,8 @@ def main(cookie):
     try:
         formhash = re.findall('name="formhash" value="(.*?)" />', hash_r.text)[0]
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
+        return
 
     check_url = 'https://www.kxdao.net/plugin.php'
     check_params = dict(
@@ -46,10 +47,10 @@ def main(cookie):
     check_r = h.get(url=check_url, headers=check_headers, params=check_params).text
     try:
         qd = re.findall('<p>(.*?)</p>', check_r)[0]
-        msg += f'签到结果：{qd}\n'
+        List.append(f'签到结果：{qd}')
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
+        return
     i_url = 'https://www.kxdao.net/home.php?mod=spacecp&ac=credit&showcredit=1'
     i_headers = {
         'Host': 'www.kxdao.net',
@@ -61,17 +62,22 @@ def main(cookie):
     try:
         db = re.findall('class="xi1 cl"><em> DB: </em>(.*?)&nbsp', i_r)[0]
         jf = re.findall('<li class="cl"><em>积分: </em>(.*?)<span class="xg1">', i_r)[0]
-        msg += f'用户DB：{db[:-2]}，积分{jf}\n'
-        return msg
+        List.append(f'用户DB：{db[:-2]}，积分{jf}')
     except Exception as e:
-        msg += f'{str(e)}'
-        return msg
+        List.append(f'{str(e)}')
 
 
 if __name__ == '__main__':
-    Cookie = os.environ.get('KXDAO_COOKIE')
-    m = '---科学刀签到开始---\n'
-    m += main(Cookie) + '\n'
-    m += '---科学刀签到结束---\n'
-    print(m)
-    send('科学刀', m)
+    i = 1
+    if 'KXDAO_COOKIE' in os.environ:
+        users = os.environ['KXDAO_COOKIE'].split('&')
+        for x in users:
+            i += 1
+            List.append(f'===账号{str(i)}开始===\n')
+            main(x)
+        tt = '\n'.join(List)
+        print(tt)
+        send('科学刀', tt)
+    else:
+        print('未配置环境变量')
+        send('科学刀', '未配置环境变量')

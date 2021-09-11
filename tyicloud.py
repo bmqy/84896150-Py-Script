@@ -19,7 +19,7 @@ sys.path.append('.')
 requests.packages.urllib3.disable_warnings()
 
 tianyi_session = requests.Session()
-
+List = []
 headers = {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
     "Referer": "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -30,23 +30,21 @@ headers = {
 
 # 签到
 def checkin():
-    global result
     rand = str(round(time.time() * 1000))
     url = f'https://api.cloud.189.cn/mkt/userSign.action?rand={rand}&clientType=TELEANDROID&version=8.6.3&model=SM-G930K'
     response = tianyi_session.get(url, headers=headers)
     netdiskBonus = response.json()['netdiskBonus']
     try:
         if response.json()['isSign'] == "false":
-            result += f"🎉签到成功，获得了{netdiskBonus}M空间\n"
+            List.append(f"🎉签到成功，获得了{netdiskBonus}M空间")
         else:
-            result += f"🎉签到成功，获得了{netdiskBonus}M空间\n"
+            List.append(f"🎉签到成功，获得了{netdiskBonus}M空间")
     except Exception as e:
-        result += '🧨签到失败!'
+        List.append('🧨签到失败!')
 
 
 # 抽奖
 def lottery(few):
-    global result
     url = ''
     if few == 1:
         url = 'https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?taskId=TASK_SIGNIN&activityId=ACT_SIGNIN'
@@ -55,14 +53,14 @@ def lottery(few):
     response = tianyi_session.get(url, headers=headers)
     if "errorCode" in response.text:
         if response.json()['errorCode'] == "User_Not_Chance":
-            result += f"第{str(few)}次抽奖次数不足\n"
+            List.append(f"第{str(few)}次抽奖次数不足")
         else:
-            result += f"第{str(few)}次抽奖出错\n"
+            List.append(f"第{str(few)}次抽奖出错")
     else:
         message = ''
         if "prizeName" in response.json():
             message = ",获得" + response.json()['prizeName']
-        result += f"第{str(few)}次抽奖完成{message}\n"
+        List.append(f"第{str(few)}次抽奖完成{message}")
 
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
@@ -115,7 +113,6 @@ def calculate_md5_sign(params):
 
 
 def login(username, password):
-    global result
     url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
     r = tianyi_session.get(url)
     captchaToken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
@@ -148,23 +145,30 @@ def login(username, password):
         if r.json()['result'] == 0:
             print(r.json()['msg'])
         else:
-            result += "登录出错"
+            List.append("登录出错")
             return "error"
         redirect_url = r.json()['toUrl']
         r = tianyi_session.get(redirect_url)
         return tianyi_session
     except Exception as e:
-        result += "登录账号出现异常!"
+        List.append("登录账号出现异常!")
 
 
 if __name__ == "__main__":
-    result = '🏆天翼云盘签到姬🏆\n'
-    UserInfo = os.environ.get('TIANYI')
-    username, password = UserInfo.split('-')
-    msg = login(username, password)
-    if msg != "error":
-        checkin()
-        lottery(1)
-        lottery(2)
-        print(result)
-        send('天翼云盘', result)
+    i = 1
+    if 'TIANYI' in os.environ:
+        users = os.environ['TIANYI'].split('&')
+        for x in users:
+            i += 1
+            name, pwd = x.split('-')
+            List.append(f'===账号{str(i)}开始===\n')
+            login(name, pwd)
+            checkin()
+            lottery(1)
+            lottery(2)
+        tt = '\n'.join(List)
+        print(tt)
+        send('天翼云盘', tt)
+    else:
+        print('未配置环境变量')
+        send('天翼云盘', '未配置环境变量')
