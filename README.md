@@ -10,4 +10,4 @@
 |`XIAOMI`|`123456-abcdefg`|miSport.py|小米运动|
 |`MT_INFO`|`123456-abcdefg`|mtsign.py|MT论坛|
 |`TIANYI`|`123456-abcdefg`|tyicloud.py|天翼云盘签到|
-
+|`SMZDM_COOKIE `|`sess=xxx;`|smzdm_mission.js|什么值得买签到|
