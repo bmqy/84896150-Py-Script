@@ -68,12 +68,12 @@ def main(cookie):
 
 
 if __name__ == '__main__':
-    i = 1
+    i = 0
     if 'KXDAO_COOKIE' in os.environ:
         users = os.environ['KXDAO_COOKIE'].split('&')
         for x in users:
             i += 1
-            List.append(f'===账号{str(i)}开始===\n')
+            List.append(f'===账号{str(i)}开始===')
             main(x)
         tt = '\n'.join(List)
         print(tt)

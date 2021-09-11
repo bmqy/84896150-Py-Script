@@ -31,12 +31,12 @@ def run(cook):
 
 
 def main():
-    i = 1
+    i = 0
     if 'ENSHAN_COOKIE' in os.environ:
         users = os.environ['ENSHAN_COOKIE'].split('&')
         for x in users:
             i += 1
-            List.append(f'===账号{str(i)}开始===\n')
+            List.append(f'===账号{str(i)}开始===')
             run(x)
         tt = '\n'.join(List)
         print(tt)

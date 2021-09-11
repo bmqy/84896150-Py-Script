@@ -155,13 +155,13 @@ def login(username, password):
 
 
 if __name__ == "__main__":
-    i = 1
+    i = 0
     if 'TIANYI' in os.environ:
         users = os.environ['TIANYI'].split('&')
         for x in users:
             i += 1
             name, pwd = x.split('-')
-            List.append(f'===账号{str(i)}开始===\n')
+            List.append(f'===账号{str(i)}开始===')
             login(name, pwd)
             checkin()
             lottery(1)

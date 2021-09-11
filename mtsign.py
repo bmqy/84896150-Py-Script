@@ -121,13 +121,13 @@ def run(username, password):
 
 
 def main():
-    i = 1
+    i = 0
     if 'MT_INFO' in os.environ:
         users = os.environ['MT_INFO'].split('&')
         for x in users:
             i += 1
             name, pwd = x.split('-')
-            List.append(f'===账号{str(i)}开始===\n')
+            List.append(f'===账号{str(i)}开始===')
             run(name, pwd)
         tt = '\n'.join(List)
         print(tt)

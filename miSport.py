@@ -127,7 +127,7 @@ def get_app_token(login_token):
 
 
 if __name__ == '__main__':
-    i = 1
+    i = 0
     if 'XIAOMI' in os.environ:
         users = os.environ['TIANYI'].split('&')
         for x in users:
