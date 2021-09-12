@@ -65,8 +65,9 @@ if __name__ == '__main__':
         for x in users:
             i += 1
             name, pwd = x.split('-')
-            List.append(f'===账号{str(i)}开始===')
+            List.append(f'===> [账号{str(i)}]Start <===')
             login(name, pwd)
+            List.append(f'===> [账号{str(i)}]End <===\n')
         tt = '\n'.join(List)
         print(tt)
         send('科技玩家', tt)

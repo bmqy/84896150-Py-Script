@@ -73,8 +73,9 @@ if __name__ == '__main__':
         users = os.environ['KXDAO_COOKIE'].split('&')
         for x in users:
             i += 1
-            List.append(f'===账号{str(i)}开始===')
+            List.append(f'===> [账号{str(i)}]Start <===')
             main(x)
+            List.append(f'===> [账号{str(i)}]End <===\n')
         tt = '\n'.join(List)
         print(tt)
         send('科学刀', tt)

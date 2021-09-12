@@ -133,9 +133,10 @@ if __name__ == '__main__':
         for x in users:
             i += 1
             user, pwd = x.split('-')
-            List.append(f'===账号{str(i)}开始===')
+            List.append(f'===> [账号{str(i)}]Start <===')
             msg = run(user, pwd)
             List.append(msg)
+            List.append(f'===> [账号{str(i)}]End <===\n')
         m = '\n'.join(List)
         print(m)
         send('小米运动', m)

@@ -36,8 +36,9 @@ def main():
         users = os.environ['ENSHAN_COOKIE'].split('&')
         for x in users:
             i += 1
-            List.append(f'===账号{str(i)}开始===')
+            List.append(f'===> [账号{str(i)}]Start <===')
             run(x)
+            List.append(f'===> [账号{str(i)}]End <===\n')
         tt = '\n'.join(List)
         print(tt)
         send('恩山论坛', tt)

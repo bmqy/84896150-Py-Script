@@ -127,8 +127,9 @@ def main():
         for x in users:
             i += 1
             name, pwd = x.split('-')
-            List.append(f'===账号{str(i)}开始===')
+            List.append(f'===> [账号{str(i)}]Start <===')
             run(name, pwd)
+            List.append(f'===> [账号{str(i)}]End <===\n')
         tt = '\n'.join(List)
         print(tt)
         send('MT论坛', tt)
