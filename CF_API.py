@@ -14,8 +14,8 @@ http = requests.Session()
 
 
 def askApi(accountInfo, dnsInfo):
-    t = time.strftime("%H时%M分%S秒", time.localtime())
     global lsip
+    t = time.strftime("%H时%M分%S秒", time.localtime())
     msg = ''
     headers = {
         'user-agent': 'Mozilla/5.0',
@@ -34,7 +34,7 @@ def askApi(accountInfo, dnsInfo):
                 if x['content'] == dnsInfo['content']:
                     msg += f'''=====无需解析=====\n时间：{t}\n域名：{dnsInfo['name']}\n本次IP：{dnsInfo['content']}\n记录IP：{x['content']}'''
                     print(msg)
-                    return msg
+                    return False
     except:
         msg += f'''=====解析失败=====\n时间：{t}\n域名：{dnsInfo['name']}解析失败❗'''
         return msg
@@ -79,6 +79,7 @@ if __name__ == '__main__':
             'proxied': False  # 是否开启Cloudflare
         }
         M = askApi(accountInfo, dnsInfo=dnsInfo)
-        send('域名解析', M)
+        if not M:
+            send('域名解析', M)
     else:
         send('域名解析', '未正确配置环境变量')
