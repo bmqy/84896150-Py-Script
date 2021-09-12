@@ -77,12 +77,12 @@ def run(user, passwd, step=''):
     step = str(step)
 
     if step == '':
-        print("已设置为随机步数（20000-29999）")
+        List.append("已设置为随机步数（20000-29999）")
         step = str(random.randint(20000, 29999))
     login_token, userid = login(user, password)
     if login_token == 0:
-        print("登陆失败！")
-        return "login fail!"
+        List.append("登陆失败！")
+        return
 
     t = get_time()
 
