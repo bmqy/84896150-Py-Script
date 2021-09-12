@@ -79,7 +79,9 @@ if __name__ == '__main__':
             'proxied': False  # 是否开启Cloudflare
         }
         M = askApi(accountInfo, dnsInfo=dnsInfo)
-        if M:
+        if not M:
+            print(M)
+        else:
             send('域名解析', M)
     else:
         send('域名解析', '未正确配置环境变量')
