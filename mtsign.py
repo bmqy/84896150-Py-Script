@@ -130,6 +130,7 @@ def main():
             List.append(f'===> [账号{str(i)}]Start <===')
             run(name, pwd)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         tt = '\n'.join(List)
         print(tt)
         send('MT论坛', tt)

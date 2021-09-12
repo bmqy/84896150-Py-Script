@@ -137,6 +137,7 @@ if __name__ == '__main__':
             msg = run(user, pwd)
             List.append(msg)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         m = '\n'.join(List)
         print(m)
         send('小米运动', m)

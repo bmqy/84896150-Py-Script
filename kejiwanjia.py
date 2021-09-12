@@ -8,6 +8,7 @@ new Env('科技玩家-签到');
 import requests
 import os
 from push import send
+import time
 
 List = []
 
@@ -68,6 +69,7 @@ if __name__ == '__main__':
             List.append(f'===> [账号{str(i)}]Start <===')
             login(name, pwd)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         tt = '\n'.join(List)
         print(tt)
         send('科技玩家', tt)

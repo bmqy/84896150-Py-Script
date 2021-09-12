@@ -9,6 +9,7 @@ import requests
 import os
 from push import send
 import re
+import time
 
 h = requests.Session()
 List = []
@@ -39,6 +40,7 @@ def main():
             List.append(f'===> [账号{str(i)}]Start <===')
             run(x)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         tt = '\n'.join(List)
         print(tt)
         send('恩山论坛', tt)

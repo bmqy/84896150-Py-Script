@@ -168,6 +168,7 @@ if __name__ == "__main__":
             lottery(1)
             lottery(2)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         tt = '\n'.join(List)
         print(tt)
         send('天翼云盘', tt)

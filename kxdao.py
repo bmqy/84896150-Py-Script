@@ -9,6 +9,7 @@ import requests
 import re
 import os
 from push import send
+import time
 
 h = requests.Session()
 List = []
@@ -76,6 +77,7 @@ if __name__ == '__main__':
             List.append(f'===> [账号{str(i)}]Start <===')
             main(x)
             List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
         tt = '\n'.join(List)
         print(tt)
         send('科学刀', tt)
