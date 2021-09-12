@@ -158,6 +158,7 @@ if __name__ == "__main__":
     i = 0
     if 'TIANYI' in os.environ:
         users = os.environ['TIANYI'].split('&')
+        print(users)
         for x in users:
             i += 1
             name, pwd = x.split('-')
