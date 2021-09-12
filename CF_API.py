@@ -34,7 +34,7 @@ def askApi(accountInfo, dnsInfo):
                 if x['content'] == dnsInfo['content']:
                     msg += f'''=====无需解析=====\n时间：{t}\n域名：{dnsInfo['name']}\n本次IP：{dnsInfo['content']}\n记录IP：{x['content']}'''
                     print(msg)
-                    return True
+                    return False
     except:
         msg += f'''=====解析失败=====\n时间：{t}\n域名：{dnsInfo['name']}解析失败❗'''
         return msg
@@ -79,9 +79,9 @@ if __name__ == '__main__':
             'proxied': False  # 是否开启Cloudflare
         }
         M = askApi(accountInfo, dnsInfo=dnsInfo)
-        if not M:
-            print(M)
-        else:
+        if M:
             send('域名解析', M)
+        else:
+            print(M)
     else:
         send('域名解析', '未正确配置环境变量')
