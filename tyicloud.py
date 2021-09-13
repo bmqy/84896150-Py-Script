@@ -115,7 +115,9 @@ def calculate_md5_sign(params):
 def login(username, password):
     url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
     r = tianyi_session.get(url)
-    captchaToken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
+    a = re.findall(r"captchaToken' value='(.+?)'", r.text)
+    print(a)
+    captchaToken = a[0]
     lt = re.findall(r'lt = "(.+?)"', r.text)[0]
     returnUrl = re.findall(r"returnUrl = '(.+?)'", r.text)[0]
     paramId = re.findall(r'paramId = "(.+?)"', r.text)[0]
