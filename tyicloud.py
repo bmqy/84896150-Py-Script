@@ -28,6 +28,32 @@ headers = {
 }
 
 
+def main():
+    i = 0
+    if 'TIANYI' in os.environ:
+        users = os.environ['TIANYI'].split('&')
+        print(users)
+        for x in users:
+            i += 1
+            name, pwd = x.split('-')
+            List.append(f'===> [账号{str(i)}]Start <===')
+            e = login(name, pwd)
+            if e != "error":
+                checkin()
+                lottery(1)
+                lottery(2)
+            else:
+                break
+            List.append(f'===> [账号{str(i)}]End <===\n')
+            time.sleep(1)
+        tt = '\n'.join(List)
+        print(tt)
+        send('天翼云盘', tt)
+    else:
+        print('未配置环境变量')
+        send('天翼云盘', '未配置环境变量')
+
+
 # 签到
 def checkin():
     rand = str(round(time.time() * 1000))
@@ -115,9 +141,7 @@ def calculate_md5_sign(params):
 def login(username, password):
     url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
     r = tianyi_session.get(url)
-    a = re.findall(r"captchaToken' value='(.+?)'", r.text)
-    print(a)
-    captchaToken = a[0]
+    captchaToken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
     lt = re.findall(r'lt = "(.+?)"', r.text)[0]
     returnUrl = re.findall(r"returnUrl = '(.+?)'", r.text)[0]
     paramId = re.findall(r'paramId = "(.+?)"', r.text)[0]
@@ -157,23 +181,4 @@ def login(username, password):
 
 
 if __name__ == "__main__":
-    i = 0
-    if 'TIANYI' in os.environ:
-        users = os.environ['TIANYI'].split('&')
-        print(users)
-        for x in users:
-            i += 1
-            name, pwd = x.split('-')
-            List.append(f'===> [账号{str(i)}]Start <===')
-            login(name, pwd)
-            checkin()
-            lottery(1)
-            lottery(2)
-            List.append(f'===> [账号{str(i)}]End <===\n')
-            time.sleep(1)
-        tt = '\n'.join(List)
-        print(tt)
-        send('天翼云盘', tt)
-    else:
-        print('未配置环境变量')
-        send('天翼云盘', '未配置环境变量')
+    main()
