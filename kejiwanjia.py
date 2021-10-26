@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 """
 说明: 环境变量`KJWJ_UP`账号密码`-`分割
-cron: 20 7 * * *
+cron: 20 */6 * * *
 new Env('科技玩家-签到');
 """
 import requests
