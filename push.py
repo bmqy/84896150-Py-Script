@@ -50,7 +50,7 @@ if "QYWX_AM" in os.environ:
     if len(os.environ["QYWX_AM"]) > 1:
         QYWX_AM = os.environ["QYWX_AM"]
         # print("已获取并使用Env环境 QYWX_AM")
-if 'QYWX_KEY' in os.environ["QYWX_KEY"]:
+if 'QYWX_KEY' in os.environ:
     QYWX_KEY = os.environ["QYWX_KEY"]
 
 if TG_BOT_TOKEN and TG_USER_ID:
@@ -237,6 +237,13 @@ class WeCom:
         respone = respone.json()
         return respone["errmsg"]
 
+def pushplus_bot(title, content):
+    url = "https://www.pushplus.plus/send"
+    data = { 'token':PUSH_PLUS_TOKEN, 'title':title, 'content':content }
+    # 发送请求
+    res = requests.post(url=url, data=data).text
+    # 输出发送结果
+    print(res)
 
 def send(title, content):
     """
@@ -269,6 +276,12 @@ def send(title, content):
                 wxBot(title=title, content=content)
             else:
                 print('未启用企业机器人消息推送')
+            continue
+        elif i == 'pushplus_bot':
+            if PUSH_PLUS_TOKEN:
+                pushplus_bot(title=title, content=content)
+            else:
+                print('未启用pushplus消息推送')
             continue
         else:
             print('此类推送方式不存在')
