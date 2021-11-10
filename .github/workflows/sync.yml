@@ -13,7 +13,7 @@ jobs:
     - name: repo-sync
       uses: repo-sync/github-sync@v2
       with:
-        source_repo: "https://github.com/84896150/Py-Script"
+        source_repo: "https://github.com/Mr-Liu1996/ql_script"
         source_branch: "main"
         destination_branch: "master"
         github_token: ${{ secrets.PAT }}
