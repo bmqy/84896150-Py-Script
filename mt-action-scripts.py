@@ -1,6 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# author:fugui
+#!/usr/bin/python3
+# -*- coding: utf8 -*-
+"""
+说明: 环境变量名`WUAI_COOKI`
+cron: 0 0,1,2,3,11,14,17,21 * * *
+new Env('美团签到');
+"""
 
 from typing import Counter, Text
 import urllib.request
