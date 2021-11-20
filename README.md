@@ -1,4 +1,3 @@
-`docker exec -it ql cp /ql/scripts/Mr-Liu1996_ql_script_push.py /ql/scripts/push.py`
 
 | 变量名 | 示列值 | 文件名 | 说明 |
 |:----:|:----:|:----:|------|
