@@ -7,7 +7,7 @@ new Env('科技玩家-签到');
 """
 import requests
 import os
-from push import send
+from sendNotify import send
 import time
 
 List = []

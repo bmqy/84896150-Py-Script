@@ -10,7 +10,7 @@ import re
 import time
 import requests
 import os
-from push import send
+from sendNotify import send
 
 List = []
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

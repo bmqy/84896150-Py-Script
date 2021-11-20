@@ -8,7 +8,7 @@ new Env('科学刀-签到');
 import requests
 import re
 import os
-from push import send
+from sendNotify import send
 import time
 
 h = requests.Session()

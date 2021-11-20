@@ -13,7 +13,7 @@ import base64
 import hashlib
 import os
 import sys
-from push import send
+from sendNotify import send
 
 sys.path.append('.')
 requests.packages.urllib3.disable_warnings()

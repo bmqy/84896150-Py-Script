@@ -7,7 +7,7 @@ new Env('恩山论坛-签到');
 """
 import requests
 import os
-from push import send
+from sendNotify import send
 import re
 import time
 

@@ -9,7 +9,7 @@ import requests
 import re
 import time
 import os
-from push import send
+from sendNotify import send
 
 h = requests.Session()
 List = []

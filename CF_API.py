@@ -8,7 +8,7 @@ import requests
 import time
 import json
 import os
-from push import send
+from sendNotify import send
 
 http = requests.Session()
 
