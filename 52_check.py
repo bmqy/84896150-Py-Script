@@ -8,7 +8,7 @@ new Env('吾爱破解-签到');
 import requests
 import re
 import os
-from push import send
+from sendNotify import send
 import time
 
 h = requests.Session()
