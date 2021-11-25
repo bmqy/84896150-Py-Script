@@ -18,7 +18,7 @@ List = []
 def main(cookie):
     url = 'https://www.52pojie.cn/home.php?mod=task&do=apply&id=2'
     headers = {
-        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; SE 2.X MetaSr 1.0; SE 2.X MetaSr 1.0; .NET CLR 2.0.50727; SE 2.X MetaSr 1.0)',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.814.0 Safari/535.1',
         'ContentType': 'text/html;charset=gbk',
         'Cookie': cookie
     }
