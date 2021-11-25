@@ -34,10 +34,15 @@ def main(cookie):
         return
 
     check_url = 'https://www.kxdao.net/plugin.php'
+    # https://www.kxdao.net/plugin.php?id=dsu_amupper&ppersubmit=true&formhash=formhash&infloat=yes&handlekey=dsu_amupper&inajax=1&ajaxtarget=fwin_content_dsu_amupper
     check_params = dict(
         id='dsu_amupper',
         ppersubmit='true',
-        formhash=formhash
+        formhash=formhash,
+        infloat='yes',
+        handlekey='dsu_amupper',
+        inajax='1',
+        ajaxtarget='fwin_content_dsu_amupper'
     )
     check_headers = {
         'referer': 'https://www.kxdao.net/',

@@ -88,21 +88,6 @@ eight = ten = fifteen = thirty = fifty = int(os.environ.get("on"))
 ten_left = fifteen_left = thirty_left = fifty_left = int(os.environ.get("left"))
 
 
-# 将print内容同步写到output.txt文件
-# class Logger(object):
-#     def __init__(self, fileN='Default.log'):
-#         self.terminal = sys.stdout
-#         self.log = open(fileN, 'w+',encoding='utf-8')
-
-#     def write(self, message):
-#         '''print实际相当于sys.stdout.write'''
-#         self.terminal.write(message)
-#         self.log.write(message)
-
-#     def flush(self):
-#         pass
-
-
 class __Autonomy__(object):
     def __init__(self):
         self._buff = ""
