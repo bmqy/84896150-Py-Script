@@ -1,7 +1,7 @@
 
 | 变量名 | 示列值 | 文件名 | 说明 |
 |:----:|:----:|:----:|------|
-|`WUAI_COOKIE`|`htVD_2132_saltkey=xxx; htVD_2132_auth=xxx;`|52_check.py|吾爱破解签到|
+|`WUAI_COOKIE`|`htVC_2132_saltkey=xxx; htVC_2132_auth=xxx;htVD_2132_saltkey=xxx; htVD_2132_auth=xxx;`|52_check.py|吾爱破解签到|
 |`CF_API` `CF_KEY`|`xxx`|CF_API.py|动态域名解析|
 |`ENSHAN_COOKIE`|`DJyZ_2132_saltkey=xxx; DJyZ_2132_auth=xxx;`|enshan.py|恩山论坛签到|
 |`KJWJ_UP`|`12345@qq.com-123456`|kejiwanjia.py|科技玩家签到|
